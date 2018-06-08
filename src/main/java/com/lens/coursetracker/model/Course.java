@@ -11,7 +11,6 @@ import java.util.Set;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Course {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -28,7 +27,6 @@ public class Course {
     private Set<Tag> tags;
 
     public Course() {
-
     }
 
     public Course(String title, String author, String url, String subjects, Date publishdate, Set<Tag> tags) {
