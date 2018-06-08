@@ -12,20 +12,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpSession;
-
 @Controller
 public class MyCourseController {
 
     private final MyCourseService myCourseService;
     private final CourseService courseService;
-    private final HttpSession session;
+
 
     @Autowired
-    public MyCourseController(MyCourseService myCourseService, CourseService courseService,HttpSession session) {
+    public MyCourseController(MyCourseService myCourseService, CourseService courseService) {
         this.myCourseService = myCourseService;
         this.courseService = courseService;
-        this.session = session;
+
     }
 
     @GetMapping("getMyCourses")
