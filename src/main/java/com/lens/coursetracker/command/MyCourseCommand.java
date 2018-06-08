@@ -1,10 +1,8 @@
 package com.lens.coursetracker.command;
 
-import com.lens.coursetracker.model.Course;
-
 public class MyCourseCommand {
     private Integer id;
-    private int course;
+    private Integer course;
     private String notes;
     private Boolean completed;
 
@@ -26,11 +24,11 @@ public class MyCourseCommand {
         this.id = id;
     }
 
-    public int getCourse() {
+    public Integer getCourse() {
         return course;
     }
 
-    public void setCourse(int course) {
+    public void setCourse(Integer course) {
         this.course = course;
     }
 
