@@ -1,20 +1,13 @@
-package com.lens.coursetracker.model;
+package com.lens.coursetracker.command;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.lens.coursetracker.model.Tag;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
-@Entity
-@EntityListeners(AuditingEntityListener.class)
-public class Course {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CourseCommand {
     private Integer id;
     @NotEmpty
     private String title;
@@ -22,16 +15,14 @@ public class Course {
     @NotEmpty
     private String url;
     private String subjects;
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date publishdate;
-    @ManyToMany
     private Set<Tag> tags;
 
-    public Course() {
+
+    public CourseCommand() {
     }
 
-    public Course(String title, String author, String url, String subjects, Date publishdate, Set<Tag> tags) {
+    public CourseCommand(String title, String author, String url, String subjects, Date publishdate, Set<Tag> tags/*String[] tags*/) {
         this.title = title;
         this.author = author;
         this.url = url;
@@ -98,15 +89,14 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" +
+        return "CourseCommand{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", url='" + url + '\'' +
                 ", subjects='" + subjects + '\'' +
                 ", publishdate=" + publishdate +
-                ", tags='" + tags + '\'' +
+                ", tags=" + tags +
                 '}';
     }
 }
-
