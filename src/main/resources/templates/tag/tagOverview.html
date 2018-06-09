@@ -4,90 +4,43 @@
     <meta charset="UTF-8"/>
     <title>List Tags</title>
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
-          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
-
-    <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+    <th:block th:replace="pagefragments/bootstrap"></th:block>
 </head>
 <body>
-<nav class="navbar navbar-default">
+<div th:with="pageTags=${true}">
+    <th:block th:replace="pagefragments/navbar"></th:block>
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">CourseTracker</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li><a href="/getMyCourses">MyCourses</a></li>
-                <li><a href="/getCourses">Courses</a></li>
-                <li class="active"><a href="/getTags">Tags</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">Create <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/courseForm">Course</a></li>
-                        <li><a href="/tagForm">Tag</a></li>
-                        <li><a href="/myCourseForm">MyCourse</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">Search <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/searchTag">Search by Tag</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
-<div class="container-fluid">
-    <div class="col-md-6 col-md-offset-3">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-md-10">
-                        <h1 class="panel-title">
-                            Tags
-                        </h1>
-                    </div>
-                    <div class="col-md-1">
-                        <a class="btn btn-default" href="/tagForm" role="button">New Tag</a>
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h1 class="panel-title">
+                                Tags
+                            </h1>
+                        </div>
+                        <div class="col-md-1">
+                            <a class="btn btn-default" href="/tagForm" role="button">New Tag</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel-body">
-                <div class="table-responsive" th:if="${not #lists.isEmpty(tags)}">
-                    <table class="table table-hover ">
-                        <thead class="thead-inverse">
-                        <tr>
-                            <th>Tags</th>
-                            <th>Delete</th>
-                            <th>Edit</th>
-                        </tr>
-                        </thead>
-                        <tr th:each="tag : ${tags}">
-                            <td th:text="${tag.tagName}"></td>
-                            <td><a href="#" th:href="@{'/tag/delete/'+${tag.id}}">Delete</a></td>
-                            <td><a href="#" th:href="@{'/tag/edit/'+${tag.id}}">Edit</a></td>
-                        </tr>
-                    </table>
+                <div class="panel-body">
+                    <div class="table-responsive" th:if="${not #lists.isEmpty(tags)}">
+                        <table class="table table-hover ">
+                            <thead class="thead-inverse">
+                            <tr>
+                                <th>Tags</th>
+                                <th>Delete</th>
+                                <th>Edit</th>
+                            </tr>
+                            </thead>
+                            <tr th:each="tag : ${tags}">
+                                <td th:text="${tag.tagName}"></td>
+                                <td><a href="#" th:href="@{'/tag/delete/'+${tag.id}}">Delete</a></td>
+                                <td><a href="#" th:href="@{'/tag/edit/'+${tag.id}}">Edit</a></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
