@@ -30,37 +30,34 @@
                     <button type="submit" class="btn btn-primary" name="submit" value="submit">Search</button>
                 </form>
                 <div class="panel-body">
-                    <div class="table-responsive" th:if="${not #lists.isEmpty(courses)}">
-                        <table class="table table-hover ">
-                            <thead class="thead-inverse">
-                            <tr>
-                                <th>Title</th>
-                                <th>Author</th>
-                                <th>URL</th>
-                            </tr>
-                            </thead>
-                            <tr th:each="course : ${courses}">
-                                <td th:text="${course.title}"></td>
-                                <td th:text="${course.author}"></td>
-                                <td th:text="${course.url}"></td>
-                            </tr>
-                        </table>
+                    <div class="panel panel-info" th:if="${not #lists.isEmpty(courses)}">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <h1 class="panel-title">
+                                        Courses
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <th:block th:replace="pagefragments/courseListTable"></th:block>
+                        </div>
                     </div>
-                    <div class="table-responsive" th:if="${not #lists.isEmpty(myCourses)}">
-                        <table class="table table-hover ">
-                            <thead class="thead-inverse">
-                            <tr>
-                                <th>Course</th>
-                                <th>Notes</th>
-                                <th>Completed?</th>
-                            </tr>
-                            </thead>
-                            <tr th:each="myCourse : ${myCourses}">
-                                <td th:text="${myCourse.course.title} + ' ('+${myCourse.course.author}+')'"></td>
-                                <td th:text="${myCourse.notes}"></td>
-                                <td th:text="${myCourse.completed}"></td>
-                            </tr>
-                        </table>
+
+                    <div class="panel panel-info" th:if="${not #lists.isEmpty(myCourses)}">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <h1 class="panel-title">
+                                        MyCourses
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <th:block th:replace="pagefragments/myCourseListTable"></th:block>
+                        </div>
                     </div>
                 </div>
             </div>

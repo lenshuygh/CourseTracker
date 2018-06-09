@@ -25,26 +25,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="table-responsive" th:if="${not #lists.isEmpty(myCourses)}">
-                        <table class="table table-hover ">
-                            <thead class="thead-inverse">
-                            <tr>
-                                <th>Course</th>
-                                <th>Notes</th>
-                                <th>Completed?</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
-                            </thead>
-                            <tr th:each="myCourse : ${myCourses}">
-                                <td th:text="${myCourse.course.title} + ' ('+${myCourse.course.author}+')'"></td>
-                                <td th:text="${myCourse.notes}"></td>
-                                <td th:text="${myCourse.completed}"></td>
-                                <td><a href="#" th:href="@{'/myCourse/delete/'+${myCourse.id}}">Delete</a></td>
-                                <td><a href="#" th:href="@{'/myCourse/edit/'+${myCourse.id}}">Edit</a></td>
-                            </tr>
-                        </table>
-                    </div>
+                    <th:block th:replace="pagefragments/myCourseListTable"></th:block>
                 </div>
             </div>
         </div>

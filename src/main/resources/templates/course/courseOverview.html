@@ -25,33 +25,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="table-responsive" th:if="${not #lists.isEmpty(courses)}">
-                        <table class="table table-hover ">
-                            <thead class="thead-inverse">
-                            <tr>
-                                <th>Title</th>
-                                <th>Author</th>
-                                <th>Tags</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
-                            </thead>
-                            <tr th:each="course : ${courses}">
-                                <td th:text="${course.title}"></td>
-                                <td th:text="${course.author}"></td>
-                                <td>
-                                <span th:each="tag,iter : ${course.tags}">
-                                    <span th:text="${tag.tagName}"></span>
-                                    <span th:if="${iter.index + 1 != iter.size}">
-                                        <span th:text="' / '"/>
-                                    </span>
-                                </span>
-                                </td>
-                                <td><a href="#" th:href="@{'/course/delete/'+${course.id}}">Delete</a></td>
-                                <td><a href="#" th:href="@{'/course/edit/'+${course.id}}">Edit</a></td>
-                            </tr>
-                        </table>
-                    </div>
+                    <th:block th:replace="pagefragments/courseListTable"></th:block>
                 </div>
             </div>
         </div>
