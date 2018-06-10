@@ -1,9 +1,12 @@
 package com.lens.coursetracker.service;
 
+import com.lens.coursetracker.CoursetrackerApplication;
 import com.lens.coursetracker.command.MyCourseCommand;
 import com.lens.coursetracker.model.MyCourse;
 import com.lens.coursetracker.repository.CourseRepository;
 import com.lens.coursetracker.repository.MyCourseRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +24,17 @@ public class MyCourseServiceImpl implements MyCourseService {
         this.courseRepository = courseRepository;
     }
 
+    private static Logger logger = LogManager.getLogger(CoursetrackerApplication.class);
+
     @Override
     public MyCourse getMyCourse(int id) {
+        logger.info("getMyCourse() -> " + id);
         return myCourseRepository.getOne(id);
     }
 
     @Override
     public Set<MyCourse> findAll() {
+        logger.info("findAll()");
         Set<MyCourse> myCourseSet = new HashSet<>();
         myCourseRepository.findAll().iterator().forEachRemaining(myCourseSet::add);
         return myCourseSet;
@@ -35,6 +42,7 @@ public class MyCourseServiceImpl implements MyCourseService {
 
     @Override
     public void save(MyCourse myCourse) {
+        logger.info("save() -> "+ myCourse);
         myCourseRepository.save(myCourse);
     }
 
@@ -45,11 +53,13 @@ public class MyCourseServiceImpl implements MyCourseService {
         myCourse.setCompleted(myCourseCommand.getCompleted());
         myCourse.setNotes(myCourseCommand.getNotes());
         myCourse.setCourse(courseRepository.getOne(myCourseCommand.getCourse()));
+        logger.info("save() -> " + myCourse);
         save(myCourse);
     }
 
     @Override
     public void deleteById(int id) {
+        logger.info("deleteById() -> " + id);
         myCourseRepository.deleteById(id);
     }
 
@@ -61,6 +71,7 @@ public class MyCourseServiceImpl implements MyCourseService {
         myCourseCommand.setCompleted(myCourse.getCompleted());
         myCourseCommand.setNotes(myCourse.getNotes());
         myCourseCommand.setCourse(myCourse.getCourse().getId());
+        logger.info("getMyCourseCommand() -> " + id);
         return myCourseCommand;
 
     }

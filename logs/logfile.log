@@ -1,0 +1,3 @@
+
+[ERROR] 2018-06-10 21:29:30.625 [http-nio-8080-exec-4] CoursetrackerApplication [TagServiceImpl] - save() -> com.lens.coursetracker.command.TagCommand@1ce445f2 ALREADY PRESENT
+[ERROR] 2018-06-10 21:29:43.306 [http-nio-8080-exec-1] CoursetrackerApplication [TagServiceImpl] - deleteById() -> 1 ALREADY ASSIGNED
