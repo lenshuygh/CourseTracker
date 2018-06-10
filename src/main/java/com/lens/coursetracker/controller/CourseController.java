@@ -46,15 +46,14 @@ public class CourseController {
     }
 
     @GetMapping("/courseForm")
-    public String showForm(Model model) {
-        if(null == session.getAttribute("CreateTagFromCourseForm") || (!(boolean) session.getAttribute("CreateTagFromCourseForm"))){
-            model.addAttribute("course", new Course());
-
-        }else {
+    public String showForm(@SessionAttribute("CreateTagFromCourseForm") boolean createTagFromCourseForm, Model model) {
+        if(createTagFromCourseForm){
             session.setAttribute("CreateTagFromCourseForm",false);
-            model.addAttribute("course", courseCommandToCourse.convert((CourseCommand)session.getAttribute("courseCommand") ));
+            model.addAttribute("course",courseCommandToCourse.convert((CourseCommand)session.getAttribute("courseCommand") ));
+        }else{
+            model.addAttribute("course",new Course());
         }
-        model.addAttribute("taglist", tagService.findAll());
+        model.addAttribute("taglist",tagService.findAll());
         return "course/courseForm";
     }
 

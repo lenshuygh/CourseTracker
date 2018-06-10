@@ -14,6 +14,7 @@ public class CoursetrackerApplication {
     public static void main(String[] args) {
         SpringApplication.run(CoursetrackerApplication.class, args);
 
-        System.out.println(logger.getLevel());
     }
+
+
 }
