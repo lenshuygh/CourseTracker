@@ -46,13 +46,13 @@ public class MyCourseController {
     }
 
     @GetMapping("/myCourse/delete/{id}")
-    public String deleteTag(@PathVariable String id){
+    public String deleteMyCourse(@PathVariable String id){
         myCourseService.deleteById(Integer.valueOf(id));
         return "redirect:/getMyCourses";
     }
 
-    @GetMapping("myCourse/edit/{id}")
-    private String editCourse(@PathVariable String id,Model model){
+    @GetMapping("/myCourse/edit/{id}")
+    public String editCourse(@PathVariable String id,Model model){
         model.addAttribute("myCourse",myCourseService.getMyCourseCommand (Integer.valueOf(id)));
         model.addAttribute("availableCourses",courseService.findAll());
         return "myCourse/myCourseForm";
