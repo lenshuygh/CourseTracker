@@ -64,8 +64,7 @@ public class CourseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("course/courseForm"))
                 .andExpect(model().attributeExists("taglist"))
-                .andExpect(model().attributeExists("course"))
-                .andDo(print());
+                .andExpect(model().attributeExists("course"));
 
     }
 
@@ -76,8 +75,7 @@ public class CourseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("course/courseForm"))
                 .andDo(print())
-                .andExpect(model().attributeExists("taglist"))
-                .andDo(print());
+                .andExpect(model().attributeExists("taglist"));
     }
 
     @Test
