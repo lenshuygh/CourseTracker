@@ -54,7 +54,7 @@ public class TagController {
     }
 
     @PostMapping(value = "tagSubmit", params = "cancel")
-    public String cancelCourseForm() {
+    public String cancelTagForm() {
         return "redirect:/getTags";
     }
 
