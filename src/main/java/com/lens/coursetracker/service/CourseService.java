@@ -8,8 +8,6 @@ import java.util.Set;
 public interface CourseService {
     void saveCourse(CourseCommand courseCommand);
 
-    Course findCourse(int id);
-
     Set<Course> findAll();
 
     void deleteById(int id);

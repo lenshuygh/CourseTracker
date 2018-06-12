@@ -27,12 +27,6 @@ public class CourseServiceImpl implements CourseService {
     private static Logger logger = LogManager.getLogger(CoursetrackerApplication.class);
 
     @Override
-    public Course findCourse(int id) {
-        logger.info("findCourse() -> " + id);
-        return courseRepository.getOne(id);
-    }
-
-    @Override
     public Set<Course> findAll() {
         logger.info("findAll()");
         return new HashSet<>(courseRepository.findAll());
