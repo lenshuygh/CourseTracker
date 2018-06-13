@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -46,18 +47,13 @@ public class CourseController {
     }
 
     @GetMapping("/courseForm")
-    public String showForm(@SessionAttribute("CreateTagFromCourseForm") boolean createTagFromCourseForm, Model model) {
-        if(createTagFromCourseForm){
-            session.setAttribute("CreateTagFromCourseForm",false);
-            model.addAttribute("course",courseCommandToCourse.convert((CourseCommand)session.getAttribute("courseCommand") ));
-        }else{
-            model.addAttribute("course",new Course());
-        }
-        model.addAttribute("taglist",tagService.findAll());
+    public String showForm(Model model) {
+        model.addAttribute("course", new Course());
+        model.addAttribute("taglist", tagService.findAll());
         return "course/courseForm";
     }
 
-    @PostMapping(value = "courseSubmit",params = "submit")
+    @PostMapping(value = "courseSubmit", params = "submit")
     public ModelAndView saveOrUpdateCourse(@Valid @ModelAttribute("course") CourseCommand courseCommand, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
 
@@ -71,15 +67,20 @@ public class CourseController {
         return modelAndView;
     }
 
-    @PostMapping(value = "courseSubmit",params = "addtag")
-    public String addTagInAddCourse(@ModelAttribute("course") CourseCommand courseCommand) {
-        session.setAttribute("CreateTagFromCourseForm",true);
-        session.setAttribute("courseCommand",courseCommand);
-        return "redirect:/tagForm";
+    @PostMapping(value = "courseSubmit", params = "addtag")
+    public ModelAndView addTagInAddCourse(@ModelAttribute("course") CourseCommand courseCommand, RedirectAttributes redirectAttributes) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        redirectAttributes.addFlashAttribute("courseFormObject",courseCommand);
+        redirectAttributes.addFlashAttribute("createTagFromCourseForm",true);
+
+        modelAndView.setViewName("redirect:/tagFormFromCourse");
+        return modelAndView;
     }
 
-    @PostMapping(value = "courseSubmit",params = "cancel")
-    public String cancelCourseForm(){
+
+    @PostMapping(value = "courseSubmit", params = "cancel")
+    public String cancelCourseForm() {
         return "redirect:/getCourses";
     }
 
@@ -96,15 +97,15 @@ public class CourseController {
     }
 
     @GetMapping("course/delete/{id}")
-    private String deleteCourse(@PathVariable String id){
+    private String deleteCourse(@PathVariable String id) {
         courseService.deleteById(Integer.valueOf(id));
         return "redirect:/getCourses";
     }
 
     @GetMapping("course/edit/{id}")
-    private String editCourse(@PathVariable String id,Model model){
-        model.addAttribute("course",courseService.getCourse (Integer.valueOf(id)));
-        model.addAttribute("taglist",tagService.findAll());
+    private String editCourse(@PathVariable String id, Model model) {
+        model.addAttribute("course", courseService.getCourse(Integer.valueOf(id)));
+        model.addAttribute("taglist", tagService.findAll());
         return "course/courseForm";
     }
 
