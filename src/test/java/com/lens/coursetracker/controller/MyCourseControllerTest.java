@@ -12,6 +12,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -42,16 +44,20 @@ public class MyCourseControllerTest {
     @Test
     public void getMyCourses() throws Exception{
         mockMvc.perform(get("/getMyCourses"))
+                .andExpect(status().isOk())
                 .andExpect(view().name("myCourse/myCourseOverview"))
                 .andExpect(model().attributeExists("myCourses"));
+        verify(myCourseService,times(1)).findAll();
     }
 
     @Test
     public void showMyCourseForm() throws Exception {
         mockMvc.perform(get("/myCourseForm"))
+                .andExpect(status().isOk())
                 .andExpect(view().name("myCourse/myCourseForm"))
                 .andExpect(model().attributeExists("myCourse"))
                 .andExpect(model().attributeExists("availableCourses"));
+        verify(courseService,times(1)).findAll();
     }
 
     @Test
@@ -67,6 +73,19 @@ public class MyCourseControllerTest {
         mockMvc.perform(get("/myCourse/delete/1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/getMyCourses"));
+        verify(myCourseService,times(1)).deleteById(anyInt());
+    }
+
+    @Test
+    public void editCourse() throws Exception{
+        when(myCourseService.getMyCourseCommand(anyInt())).thenReturn(new MyCourseCommand());
+
+        mockMvc.perform(get("/myCourse/edit/1"))
+                .andExpect(view().name("myCourse/myCourseForm"))
+                .andExpect(model().attributeExists("myCourse"))
+                .andExpect(model().attributeExists("availableCourses"));
+        verify(myCourseService,times(1)).getMyCourseCommand(anyInt());
+        verify(courseService,times(1)).findAll();
     }
 
     @Test
@@ -76,17 +95,4 @@ public class MyCourseControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/getMyCourses"));
     }
-
-    @Test
-    public void editCourse() throws Exception{
-        when(myCourseService.getMyCourseCommand(anyInt())).thenReturn(new MyCourseCommand());
-
-        mockMvc.perform(get("/myCourse/edit/1"))
-                .andExpect(view().name("myCourse/myCourseForm"))
-                .andDo(print())
-                .andExpect(model().attributeExists("myCourse"))
-                .andExpect(model().attributeExists("availableCourses"));
-    }
-
-
 }
