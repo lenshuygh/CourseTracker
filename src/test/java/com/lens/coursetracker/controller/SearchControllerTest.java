@@ -10,11 +10,18 @@ import com.lens.coursetracker.service.TagService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
+import javax.servlet.ServletContext;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -22,13 +29,11 @@ import java.util.Set;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class SearchControllerTest {
 
@@ -44,12 +49,6 @@ public class SearchControllerTest {
     @Mock
     SearchService searchService;
 
-    @Mock
-    RedirectAttributes redirectAttributes;
-
-    @Mock
-    TagCommand tagCommand;
-
     MockMvc mockMvc;
 
     SearchController controller;
@@ -64,53 +63,53 @@ public class SearchControllerTest {
     @Test
     public void tagSearch() throws Exception {
         mockMvc.perform(get("/searchTag"))
+                .andExpect(status().isOk())
                 .andExpect(view().name("search/tagSearch"))
                 .andExpect(model().attributeExists("availableTags"))
                 .andExpect(model().attributeExists("SearchTag"));
+        verify(tagService,times(1)).findAll();
     }
 
     @Test
     public void tagAll() throws Exception{
         mockMvc.perform(get("/searchAll"))
+                .andExpect(status().isOk())
                 .andExpect(view().name("/search/allSearch"));
     }
 
     @Test
     public void tagSearchSubmit() throws Exception{
-        //todo: fix this test
 
-       /* Map<String,Object> flashAttMap = new HashMap<>();
+        // todo problem = flashAttributes on RedirectAttributes ?
+        /*Course course = new Course();
+        course.setId(1);
         Set<Course> courses = new HashSet<>();
+        courses.add(course);
+        MyCourse myCourse = new MyCourse();
+        myCourse.setId(1);
         Set<MyCourse> myCourses = new HashSet<>();
-        Course c1 = new Course();
-        Course c2 = new Course();
-        c1.setId(1);
-        c2.setId(2);
-        c1.setTitle("title");
-        c2.setTitle("title");
-        c1.setUrl("url");
-        c2.setUrl("url");
-        courses.add(c1);
-        courses.add(c2);
-        //flashAttMap.put("courses",courses);
-        //flashAttMap.put("myCourses",myCourses);
+        myCourses.add(myCourse);
 
-        TagCommand tagCommand = new TagCommand();
-
-        when(tagCommand.getId(anyInt())).thenReturn()
-
-        when(searchService.searchCoursesByTag(anyInt())).thenReturn(courses);
         when(searchService.searchMyCoursesByTag(anyInt())).thenReturn(myCourses);
+        when(searchService.searchCoursesByTag(anyInt())).thenReturn(courses);
 
-        redirectAttributes.addFlashAttribute("courses",courses);
-        redirectAttributes.addFlashAttribute("myCourses",myCourses);
+        Map<String,Object> flashMap = new HashMap<>();
+        flashMap.put("courses",courses);
+        flashMap.put("myCourses",myCourses);
 
-        mockMvc.perform(post("/tagSearchSubmit"))
-                .andDo(print())
+        mockMvc.perform(post("/tagSearchSubmit")
+                //.flashAttr("courses",redirectAttributes.addAttribute(courses))
+                //.flashAttr("myCourses",redirectAttributes.addAttribute(myCourses))
+                .flashAttrs(flashMap)
+        )
                 .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/searchTag"))
                 .andExpect(model().attributeExists("availableTags"))
                 .andExpect(model().attributeExists("SearchTag"))
-                .andExpect(view().name("redirect:/searchTag"));
-        */
+                .andExpect(flash().attributeExists("courses"))
+                .andExpect(flash().attributeExists("myCourses"))
+        ;
+    */
+
     }
 }
