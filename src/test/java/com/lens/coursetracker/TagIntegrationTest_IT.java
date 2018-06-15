@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotEquals;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-integration-test.properties")
-public class TagIntegrationTest {
+public class TagIntegrationTest_IT {
 
     @Autowired
     TagService tagService;
