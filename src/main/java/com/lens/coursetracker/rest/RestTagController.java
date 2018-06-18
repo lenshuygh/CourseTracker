@@ -29,14 +29,14 @@ public class RestTagController {
         return tagService.getTag(id);
     }
 
-    @PostMapping("/tag/")
-    Collection<TagCommand> addTag(@RequestBody TagCommand tagCommand){
+    @PostMapping("/tag")
+    public Collection<TagCommand> addTag(@RequestBody TagCommand tagCommand){
         tagService.save(tagCommand);
         return tagService.findAll();
     }
 
     @PostMapping("tag/update/{id}")
-    Collection<TagCommand> updateTag(@PathVariable int id,@RequestBody TagCommand tagCommand){
+    public Collection<TagCommand> updateTag(@PathVariable int id,@RequestBody TagCommand tagCommand){
         TagCommand tagCommandtoUpdate = tagService.getTag(id);
         tagCommandtoUpdate.setTagName(tagCommand.getTagName());
         tagService.save(tagCommandtoUpdate);
@@ -44,7 +44,7 @@ public class RestTagController {
     }
 
     @GetMapping("tag/delete/{id}")
-    Collection<TagCommand> deleteTag(@PathVariable int id){
+    public Collection<TagCommand> deleteTag(@PathVariable int id){
         tagService.deleteById(id);
         return tagService.findAll();
     }

@@ -1,5 +1,6 @@
 package com.lens.coursetracker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.Set;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})  // to prevent error on lazy loading of the Tags that causes it because Jackson started mapping without load being complete
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Course {
