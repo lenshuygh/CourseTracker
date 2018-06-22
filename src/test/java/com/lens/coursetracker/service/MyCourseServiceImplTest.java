@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -49,14 +50,15 @@ public class MyCourseServiceImplTest {
         myCourse.setNotes(MYCOURSE_NOTES);
         myCourse.setCompleted(MYCOURSE_COMPLETED);
 
-        when(myCourseRepository.getOne(anyInt())).thenReturn(myCourse);
+        //when(myCourseRepository.getOne(anyInt())).thenReturn(myCourse);
+        when(myCourseRepository.findById(anyInt())).thenReturn(Optional.of(myCourse));
 
         MyCourse myCourseFound = myCourseService.getMyCourse(1);
 
         assertEquals(MYCOURSE_ID,myCourseFound.getId());
         assertEquals(MYCOURSE_NOTES,myCourseFound.getNotes());
         assertEquals(MYCOURSE_COMPLETED,myCourseFound.getCompleted());
-        verify(myCourseRepository,times(1)).getOne(anyInt());
+        verify(myCourseRepository,times(1)).findById(anyInt());
     }
 
     @Test
