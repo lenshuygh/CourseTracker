@@ -8,10 +8,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -80,13 +77,13 @@ public class CourseServiceImplTest {
         course.setUrl(COURSE_URL);
         course.setTitle(COURSE_TITLE);
 
-        when(courseRepository.getOne(anyInt())).thenReturn(course);
+        when(courseRepository.findById(anyInt())).thenReturn(Optional.of(course));
 
         Course courseFound = courseService.getCourse(1);
 
         assertEquals(COURSE_ID, courseFound.getId());
         assertEquals(COURSE_URL,courseFound.getUrl());
         assertEquals(COURSE_TITLE,courseFound.getTitle());
-        verify(courseRepository,times(1)).getOne(anyInt());
+        verify(courseRepository,times(1)).findById(anyInt());
     }
 }

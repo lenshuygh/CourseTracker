@@ -89,7 +89,7 @@ public class CourseIntegrationTest_IT {
     @Transactional
     @Test
     public void testReadCourse(){
-        Course course = courseService.getCourse(4);
+        Course course = courseService.getCourse(1);
 
         assertNotNull(course);
     }
