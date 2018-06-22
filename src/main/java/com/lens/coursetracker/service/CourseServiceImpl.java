@@ -10,7 +10,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -48,6 +50,10 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course getCourse(int id) {
         logger.info("getCourse() -> " + id);
-        return courseRepository.getOne(id);
+        Optional<Course> theCourse = courseRepository.findById(id);
+        if (!theCourse.isPresent()) {
+            throw new EntityNotFoundException("Course not found for id: " + id);
+        }
+        return theCourse.get();
     }
 }

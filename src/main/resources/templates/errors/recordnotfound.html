@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Duplicate Entry Error</title>
+
+    <th:block th:replace="pagefragments/bootstrap"></th:block>
+</head>
+<body>
+<th:block th:replace="pagefragments/navbar"></th:block>
+<div class="container-fluid">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h1 class="panel-title">
+                           An Error Occurred
+                        </h1>
+                    </div>
+                    <div class="col-md-1">
+                        <a class="btn btn-default" href="javascript:history.back()" role="button">Return to page</a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <b>
+                    <p th:text="${errormessage}">The data you tried to search or change is not present in the database...</p>
+                </b>
+                <p th:text="${exception}"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
