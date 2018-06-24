@@ -12,7 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -52,7 +55,11 @@ public class TagServiceImpl implements TagService {
     @Override
     public Set<TagCommand> findAll() {
         logger.info("findAll()");
-        return StreamSupport.stream(tagRepository.findAll().spliterator(), false).map(tagToTagCommand::convert).collect(Collectors.toSet());
+        //return StreamSupport.stream(tagRepository.findAll().spliterator(), false).map(tagToTagCommand::convert).collect(Collectors.toSet());
+        Set<Tag> tagSet = new HashSet<>(tagRepository.findAll());
+        SortedSet<TagCommand> tagCommandSet = new TreeSet<>();
+        tagSet.forEach(s -> tagCommandSet.add(tagToTagCommand.convert(s)));
+        return tagCommandSet;
     }
 
     @Override

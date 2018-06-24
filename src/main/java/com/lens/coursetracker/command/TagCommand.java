@@ -2,7 +2,7 @@ package com.lens.coursetracker.command;
 
 import javax.validation.constraints.NotEmpty;
 
-public class TagCommand {
+public class TagCommand implements Comparable {
     private Integer id;
     @NotEmpty
     private String tagName;
@@ -29,5 +29,10 @@ public class TagCommand {
 
     public void setTagName(String tagName) {
         this.tagName = tagName;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return this.tagName.compareTo(((TagCommand)o).tagName);
     }
 }

@@ -12,7 +12,7 @@ import java.util.Set;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})  // to prevent error on lazy loading of the Tags that causes it because Jackson started mapping without load being complete
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Course {
+public class Course implements Comparable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -107,6 +107,11 @@ public class Course {
                 ", publishdate=" + publishdate +
                 ", tags='" + tags + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return (this.title).compareTo(((Course)o).title);
     }
 }
 

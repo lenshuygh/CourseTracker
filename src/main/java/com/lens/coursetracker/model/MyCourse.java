@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class MyCourse {
+public class MyCourse implements Comparable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -65,5 +65,10 @@ public class MyCourse {
                 ", notes='" + notes + '\'' +
                 ", completed=" + completed +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return this.course.getTitle().compareTo(((MyCourse)o).course.getTitle());
     }
 }
