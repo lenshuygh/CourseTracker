@@ -63,15 +63,27 @@ public class MyCourseServiceImplTest {
 
     @Test
     public void findAll() {
+        Course course = new Course();
+        course.setId(1);
+        course.setTitle("course");
+        course.setUrl("url");
+
+        Course course2 = new Course();
+        course2.setId(2);
+        course2.setTitle("course2");
+        course2.setUrl("url2");
+
         MyCourse myCourse = new MyCourse();
         myCourse.setId(MYCOURSE_ID);
         myCourse.setNotes(MYCOURSE_NOTES);
         myCourse.setCompleted(MYCOURSE_COMPLETED);
+        myCourse.setCourse(course);
 
         MyCourse myCourse2 = new MyCourse();
         myCourse2.setId(MYCOURSE_ID_2);
         myCourse2.setNotes(MYCOURSE_NOTES_2);
         myCourse2.setCompleted(MYCOURSE_COMPLETED_2);
+        myCourse2.setCourse(course2);
 
         List<MyCourse> myCourseList = new ArrayList<>();
 
